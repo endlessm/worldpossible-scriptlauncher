@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'WorldpossibleUpdutilWindow'
 
-    label = Gtk.Template.Child()
+    chooser_label = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

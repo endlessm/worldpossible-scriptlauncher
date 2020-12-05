@@ -3,23 +3,74 @@
   <requires lib="gtk+" version="3.24"/>
     <template class="WorldpossibleUpdutilWindow" parent="GtkApplicationWindow">
       <property name="default-width">600</property>
-    <property name="default-height">300</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
-        <property name="visible">True</property>
-        <property name="show-close-button">True</property>
-        <property name="title">Hello, World!</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel" id="label">
-        <property name="label">Hello, World!</property>
-        <property name="visible">True</property>
-        <attributes>
-          <attribute name="weight" value="bold"/>
-          <attribute name="scale" value="2"/>
-        </attributes>
-      </object>
-    </child>
+      <property name="default-height">300</property>
+      <child type="titlebar">
+        <object class="GtkHeaderBar" id="header_bar">
+          <property name="visible">True</property>
+          <property name="show-close-button">True</property>
+          <property name="title">World Possible Updutil</property>
+        </object>
+      </child>
+      <child>
+        <object class ="GtkBox">
+          <property name="visible">True</property>
+          <property name="orientation">vertical</property>
+          <property name="spacing">5</property>
+          <property name="margin">10</property>
+          <property name="valign">center</property>
+          <property name="halign">center</property>
+          <child>
+            <object class ="GtkBox">
+              <property name="visible">True</property>
+              <property name="orientation">horizontal</property>
+              <property name="spacing">5</property>
+              <child>
+                <object class="GtkLabel" id="chooser_label">
+                  <property name="label" translatable="yes">Choose a script to execute as root:</property>
+                  <property name="visible">True</property>
+                  <attributes>
+                    <attribute name="weight" value="bold"/>
+                    <attribute name="scale" value="2"/>
+                  </attributes>
+                </object>
+              </child>
+              <child>
+                <object class="GtkButton" id="chooser_button">
+                  <property name="label" translatable="yes">_Open File Chooser...</property>
+                  <property name="visible">True</property>
+                  <property name="receives_default">True</property>
+                  <property name="use_underline">True</property>
+                </object>
+              </child>
+            </object>
+          </child>
+          <child>
+            <object class ="GtkBox">
+              <property name="visible">True</property>
+              <property name="orientation">horizontal</property>
+              <property name="spacing">5</property>
+              <child>
+                <object class="GtkImage">
+                  <property name="visible">True</property>
+                  <property name="can_focus">False</property>
+                  <property name="icon_name">dialog-warning-symbolic</property>
+                </object>
+              </child>
+              <child>
+                <object class="GtkLabel" id="warning_label">
+                  <property name="label" translatable="yes">Only execute scripts from trusted sources to avoid harming your computer.</property>
+                  <property name="visible">True</property>
+                  <property name="wrap">True</property>
+                  <property name="wrap-mode">word-char</property>
+                  <property name="ellipsize">end</property>
+                  <attributes>
+                    <attribute name="foreground" value="#cccc00000000"/>
+                  </attributes>
+                </object>
+              </child>
+            </object>
+          </child>
+        </object>
+      </child>
     </template>
   </interface>
