@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>org.worldpossible.Updutil.desktop</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>LGPL-2.1-or-later</project_license>
-	<description>
-	</description>
+    <id>org.worldpossible.Updutil.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>LGPL-2.1-or-later</project_license>
+    <name>World Possible Updutil</name>
+    <summary>A tool for running shell scripts with root privileges</summary>
+    <description>
+        <p>
+            The World Possible Updutil is an application that facilitates running
+            shell scripts on the host system (outside the Flatpak environment) as
+            the root user. The user is able to choose a script to run using a
+            graphical file chooser, which will then be executed and any output
+            shown. This is needed for various administration tasks of Endless OS
+            computers deployed by World Possible. With great power comes great
+            responsibility; use carefully.
+        </p>
+    </description>
+    <url type="homepage">https://github.com/endlessm/worldpossible-updutil</url>
+    <content_rating type="oars-1.1" />
 </component>
