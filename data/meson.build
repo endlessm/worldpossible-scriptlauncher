@@ -1,3 +1,5 @@
+subdir('icons')
+
 desktop_file = i18n.merge_file(
   input: 'org.worldpossible.Updutil.desktop.in',
   output: 'org.worldpossible.Updutil.desktop',
