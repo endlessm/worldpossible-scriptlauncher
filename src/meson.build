@@ -29,6 +29,7 @@ worldpossible_updutil_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'updutillogger.py',
 ]
 
 install_data(worldpossible_updutil_sources, install_dir: moduledir)
