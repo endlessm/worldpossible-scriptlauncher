@@ -17,13 +17,24 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 from gi.repository import Gtk
-
+import subprocess
+from .updutillogger import UpdutilLogger
 
 @Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
 class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'WorldpossibleUpdutilWindow'
 
-    chooser_label = Gtk.Template.Child()
+    _log = UpdutilLogger()
+
+    chooser_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.chooser_button.connect('clicked', self.on_chooser_clicked)
+
+    def on_chooser_clicked(self, button):
+        chooser = Gtk.FileChooserNative()
+        chooser.run()
+        path = chooser.get_filename()
+        self._log.info('Executing script on host system: {}'.format(path))
+        subprocess.check_call(['flatpak-spawn', '--host', 'pkexec', path])

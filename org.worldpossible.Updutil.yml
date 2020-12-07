@@ -13,6 +13,7 @@ finish-args:
   - --socket=wayland
   # We need to be able to run commands on the host to execute scripts chosen by the user
   - --talk-name=org.freedesktop.Flatpak
+  - --filesystem=host
 
 build-options:
   env: { V: '1' }
