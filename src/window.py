@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk
 import subprocess
+from subprocess import PIPE, STDOUT
 from .updutillogger import UpdutilLogger
 
 @Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
@@ -27,6 +28,9 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     _log = UpdutilLogger()
 
     chooser_button = Gtk.Template.Child()
+    output_label = Gtk.Template.Child()
+    output_window = Gtk.Template.Child()
+    output_buffer = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -37,4 +41,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         chooser.run()
         path = chooser.get_filename()
         self._log.info('Executing script on host system: {}'.format(path))
-        subprocess.check_call(['flatpak-spawn', '--host', 'pkexec', path])
+        process = subprocess.run(['flatpak-spawn', '--host', 'pkexec', path], stdout=PIPE, stderr=STDOUT)
+        self.output_label.show()
+        self.output_window.show()
+        self.output_buffer.set_text(process.stdout.decode('utf-8'))
