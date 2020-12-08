@@ -16,9 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk
-import subprocess
-from subprocess import PIPE, STDOUT
+from gi.repository import Gtk, Gio
 from .updutillogger import UpdutilLogger
 
 @Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
@@ -39,6 +37,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.chooser_button.connect('clicked', self.on_chooser_clicked)
 
     def reset(self):
+        self.chooser_button.set_sensitive(False)
         self.success_result_label.hide()
         self.success_result_label.set_text('')
         self.failure_result_label.hide()
@@ -55,15 +54,33 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         path = chooser.get_filename()
 
         self._log.info('Executing script on host system: {}'.format(path))
-        process = subprocess.run(['flatpak-spawn', '--host', 'pkexec', path], stdout=PIPE, stderr=STDOUT)
+        popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
+        proc = Gio.Subprocess.new(popen_args,
+                                  Gio.SubprocessFlags.STDOUT_PIPE |
+                                  Gio.SubprocessFlags.STDERR_MERGE)
+        proc.communicate_utf8_async(None, None, self.on_process_exit, None)
 
-        if (process.returncode == 0):
-            self.success_result_label.set_text(_('Result from script: ✓ Success'))
-            self.success_result_label.show()
-        else:
-            self.failure_result_label.set_text(_('Result from script: ✗ Failure (code {})'.format(process.returncode)))
+    def on_process_exit(self, proc, res, data=None):
+        success = False
+        try:
+            success, stdout, _ = proc.communicate_utf8_finish(res)
+        except GLib.Error as err:
+            error_message = err.message
+
+        if success:
+            exit_status = proc.get_exit_status()
+            if exit_status == 0:
+                self.success_result_label.set_text('Result from script: ✓ Success')
+                self.success_result_label.show()
+            else:
+                self.failure_result_label.set_text('Result from script: ✗ Failure (code {})'.format(exit_status))
+                self.failure_result_label.show()
+
+            self.output_label.show()
+            self.output_window.show()
+            self.output_buffer.set_text(stdout)
+        else: # subprocess failed for some reason other than exit status
+            self.failure_result_label.set_text('Result from script: ✗ Failure ({})'.format(error_message))
             self.failure_result_label.show()
 
-        self.output_label.show()
-        self.output_window.show()
-        self.output_buffer.set_text(process.stdout.decode('utf-8'))
+        self.chooser_button.set_sensitive(True)
