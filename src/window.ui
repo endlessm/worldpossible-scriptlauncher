@@ -71,10 +71,27 @@
             </object>
           </child>
           <child>
+            <object class="GtkLabel" id="success_result_label">
+              <property name="visible">False</property>
+              <property name="margin-top">15</property>
+              <attributes>
+                <attribute name="foreground" value="#0000cccc0000"/>
+              </attributes>
+            </object>
+          </child>
+          <child>
+            <object class="GtkLabel" id="failure_result_label">
+              <property name="visible">False</property>
+              <property name="margin-top">15</property>
+              <attributes>
+                <attribute name="foreground" value="#cccc00000000"/>
+              </attributes>
+            </object>
+          </child>
+          <child>
             <object class="GtkLabel" id="output_label">
               <property name="label" translatable="yes">Output from script:</property>
               <property name="visible">False</property>
-              <property name="margin-top">15</property>
             </object>
           </child>
           <child>

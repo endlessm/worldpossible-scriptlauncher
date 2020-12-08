@@ -28,6 +28,8 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     _log = UpdutilLogger()
 
     chooser_button = Gtk.Template.Child()
+    success_result_label = Gtk.Template.Child()
+    failure_result_label = Gtk.Template.Child()
     output_label = Gtk.Template.Child()
     output_window = Gtk.Template.Child()
     output_buffer = Gtk.Template.Child()
@@ -36,12 +38,32 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         super().__init__(**kwargs)
         self.chooser_button.connect('clicked', self.on_chooser_clicked)
 
+    def reset(self):
+        self.success_result_label.hide()
+        self.success_result_label.set_text('')
+        self.failure_result_label.hide()
+        self.failure_result_label.set_text('')
+        self.output_label.hide()
+        self.output_window.hide()
+        self.output_buffer.set_text('')
+
     def on_chooser_clicked(self, button):
+        self.reset()
+
         chooser = Gtk.FileChooserNative()
         chooser.run()
         path = chooser.get_filename()
+
         self._log.info('Executing script on host system: {}'.format(path))
         process = subprocess.run(['flatpak-spawn', '--host', 'pkexec', path], stdout=PIPE, stderr=STDOUT)
+
+        if (process.returncode == 0):
+            self.success_result_label.set_text(_('Result from script: ✓ Success'))
+            self.success_result_label.show()
+        else:
+            self.failure_result_label.set_text(_('Result from script: ✗ Failure (code {})'.format(process.returncode)))
+            self.failure_result_label.show()
+
         self.output_label.show()
         self.output_window.show()
         self.output_buffer.set_text(process.stdout.decode('utf-8'))
