@@ -18,7 +18,7 @@
           <property name="spacing">5</property>
           <property name="margin">10</property>
           <property name="valign">center</property>
-          <property name="halign">center</property>
+          <property name="halign">fill</property>
           <child>
             <object class="GtkLabel" id="chooser_label">
               <property name="label" translatable="yes">Choose a script to execute as root:</property>
