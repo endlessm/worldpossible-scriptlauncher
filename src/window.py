@@ -16,7 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, GLib
 from .updutillogger import UpdutilLogger
 import os.path
 
@@ -65,10 +65,16 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
             popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
         else:
             popen_args = ['pkexec', path]
-        proc = Gio.Subprocess.new(popen_args,
-                                  Gio.SubprocessFlags.STDOUT_PIPE |
-                                  Gio.SubprocessFlags.STDERR_MERGE)
-        proc.communicate_utf8_async(None, None, self.on_process_exit, None)
+
+        try:
+            proc = Gio.Subprocess.new(popen_args,
+                                      Gio.SubprocessFlags.STDOUT_PIPE |
+                                      Gio.SubprocessFlags.STDERR_MERGE)
+            proc.communicate_utf8_async(None, None, self.on_process_exit, None)
+        except GLib.Error as err:
+            self.failure_result_label.set_text('Error executing script: {}'.format(err.message))
+            self.failure_result_label.show()
+            self.chooser_button.set_sensitive(True)
 
     def on_process_exit(self, proc, res, data=None):
         success = False
