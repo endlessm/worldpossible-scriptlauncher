@@ -31,6 +31,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     output_label = Gtk.Template.Child()
     output_window = Gtk.Template.Child()
     output_buffer = Gtk.Template.Child()
+    path_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -45,14 +46,19 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.output_label.hide()
         self.output_window.hide()
         self.output_buffer.set_text('')
+        self.path_entry.set_text('')
 
     def on_chooser_clicked(self, button):
         self.reset()
 
         chooser = Gtk.FileChooserNative()
-        chooser.run()
-        path = chooser.get_filename()
+        res = chooser.run()
+        if res != Gtk.ResponseType.ACCEPT:
+            self.chooser_button.set_sensitive(True)
+            return
 
+        path = chooser.get_filename()
+        self.path_entry.set_text(path)
         self._log.info('Executing script on host system: {}'.format(path))
         popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
         proc = Gio.Subprocess.new(popen_args,
