@@ -31,11 +31,22 @@ class Application(Gtk.Application):
         super().__init__(application_id='org.worldpossible.Updutil',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
 
+    def show_warning_dialog(self, window):
+        dialog = Gtk.MessageDialog(window,
+                                   Gtk.DialogFlags.MODAL,
+                                   Gtk.MessageType.INFO,
+                                   Gtk.ButtonsType.OK,
+                                   'This utility allows you to execute scripts with administrator privileges!')
+        dialog.format_secondary_text('Only choose files from trusted sources to avoid harming your computer.')
+        dialog.run()
+        dialog.destroy()
+
     def do_activate(self):
         win = self.props.active_window
         if not win:
             win = WorldpossibleUpdutilWindow(application=self)
         win.present()
+        self.show_warning_dialog(win)
 
 
 def main(version):
