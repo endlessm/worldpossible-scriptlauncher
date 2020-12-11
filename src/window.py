@@ -33,10 +33,12 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     output_window = Gtk.Template.Child()
     output_buffer = Gtk.Template.Child()
     path_entry = Gtk.Template.Child()
+    save_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.chooser_button.connect('clicked', self.on_chooser_clicked)
+        self.save_button.connect('clicked', self.on_save_clicked)
 
     def reset(self):
         self.success_result_label.hide()
@@ -47,6 +49,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.output_window.hide()
         self.output_buffer.set_text('')
         self.path_entry.set_text('')
+        self.save_button.hide()
 
     def on_chooser_clicked(self, button):
         self.reset()
@@ -111,8 +114,30 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
             self.output_label.show()
             self.output_window.show()
             self.output_buffer.set_text(stdout)
+            self.save_button.show()
         else: # subprocess failed for some reason other than exit status
             self.failure_result_label.set_text('Result from script: ✗ Failure ({})'.format(error_message))
             self.failure_result_label.show()
 
         self.chooser_button.set_sensitive(True)
+
+    def on_save_clicked(self, button):
+        chooser = Gtk.FileChooserNative.new('Save Log', self,
+                                            Gtk.FileChooserAction.SAVE,
+                                            None, None)
+        chooser.set_do_overwrite_confirmation(True)
+
+        script_path = self.path_entry.get_text()
+        script_name = GLib.path_get_basename(script_path)
+        if len(script_name) > 0:
+            chooser.set_current_name(script_name + '.log')
+
+        res = chooser.run()
+        if res != Gtk.ResponseType.ACCEPT:
+            return
+
+        path = chooser.get_filename()
+        start, end = self.output_buffer.get_bounds()
+        buffer_text = self.output_buffer.get_text(start, end, True)
+        # FIXME: Catch errors here and print them?
+        GLib.file_set_contents(path, buffer_text.encode('utf-8'))

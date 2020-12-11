@@ -96,6 +96,12 @@
               </child>
             </object>
           </child>
+          <child>
+            <object class="GtkButton" id="save_button">
+              <property name="label" translatable="yes">Save Log</property>
+              <property name="visible">False</property>
+            </object>
+          </child>
         </object>
       </child>
     </template>
