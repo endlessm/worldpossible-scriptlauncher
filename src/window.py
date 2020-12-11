@@ -51,7 +51,9 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     def on_chooser_clicked(self, button):
         self.reset()
 
-        chooser = Gtk.FileChooserNative()
+        chooser = Gtk.FileChooserNative.new('Choose Script', self,
+                                            Gtk.FileChooserAction.OPEN,
+                                            'Run', None)
         res = chooser.run()
         if res != Gtk.ResponseType.ACCEPT:
             return
