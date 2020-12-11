@@ -18,6 +18,7 @@
 
 from gi.repository import Gtk, Gio
 from .updutillogger import UpdutilLogger
+import os.path
 
 @Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
 class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
@@ -60,7 +61,10 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         path = chooser.get_filename()
         self.path_entry.set_text(path)
         self._log.info('Executing script on host system: {}'.format(path))
-        popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
+        if os.path.isfile('/.flatpak-info'):
+            popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
+        else:
+            popen_args = ['pkexec', path]
         proc = Gio.Subprocess.new(popen_args,
                                   Gio.SubprocessFlags.STDOUT_PIPE |
                                   Gio.SubprocessFlags.STDERR_MERGE)
