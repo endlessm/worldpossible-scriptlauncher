@@ -18,7 +18,7 @@
 
 from gi.repository import Gtk, Gio, GLib
 from .updutillogger import UpdutilLogger
-import os.path
+import os
 
 @Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
 class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
@@ -39,7 +39,6 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.chooser_button.connect('clicked', self.on_chooser_clicked)
 
     def reset(self):
-        self.chooser_button.set_sensitive(False)
         self.success_result_label.hide()
         self.success_result_label.set_text('')
         self.failure_result_label.hide()
@@ -55,16 +54,21 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         chooser = Gtk.FileChooserNative()
         res = chooser.run()
         if res != Gtk.ResponseType.ACCEPT:
-            self.chooser_button.set_sensitive(True)
             return
 
         path = chooser.get_filename()
         self.path_entry.set_text(path)
-        self._log.info('Executing script on host system: {}'.format(path))
+
+        self.chooser_button.set_sensitive(False)
+
+        popen_args = []
         if os.path.isfile('/.flatpak-info'):
-            popen_args = ['flatpak-spawn', '--host', 'pkexec', path]
-        else:
-            popen_args = ['pkexec', path]
+            popen_args += ['flatpak-spawn', '--host']
+        popen_args += ['pkexec']
+        if not os.access(path, os.X_OK):
+            popen_args += ['bash']
+        popen_args += [path]
+        self._log.info('Executing command: {}'.format(' '.join(popen_args)))
 
         try:
             proc = Gio.Subprocess.new(popen_args,
@@ -85,9 +89,19 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
 
         if success:
             exit_status = proc.get_exit_status()
+            # Check the exit status. In the case of 126 or 127 it is probably
+            # from pkexec not the script itself. 127 is returned when the
+            # script lacks the executable bit in its permissions, but that is
+            # checked above.
             if exit_status == 0:
                 self.success_result_label.set_text('Result from script: ✓ Success')
                 self.success_result_label.show()
+            elif exit_status == 127:
+                self.failure_result_label.set_text('Error obtaining authorization')
+                self.failure_result_label.show()
+            elif exit_status == 126:
+                self.failure_result_label.set_text('Error obtaining authorization: user dismissed dialog')
+                self.failure_result_label.show()
             else:
                 self.failure_result_label.set_text('Result from script: ✗ Failure (code {})'.format(exit_status))
                 self.failure_result_label.show()
