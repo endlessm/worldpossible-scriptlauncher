@@ -1,0 +1,7 @@
+data/org.worldpossible.Updutil.desktop.in
+data/org.worldpossible.Updutil.appdata.xml.in
+data/org.worldpossible.updutil.gschema.xml
+src/window.ui
+src/main.py
+src/window.py
+

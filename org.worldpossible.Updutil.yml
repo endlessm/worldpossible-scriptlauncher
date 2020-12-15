@@ -1,0 +1,35 @@
+app-id: org.worldpossible.Updutil
+runtime: org.gnome.Platform
+runtime-version: '3.38'
+branch: stable
+sdk: org.gnome.Sdk
+command: worldpossible-updutil
+
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11
+  # Wayland access
+  - --socket=wayland
+  # We need to be able to run commands on the host to execute scripts chosen by the user
+  - --talk-name=org.freedesktop.Flatpak
+  - --filesystem=host
+
+build-options:
+  env: { V: '1' }
+
+cleanup:
+  - /include
+  - /man
+  - /share/man
+  - "*.la"
+  - "*.a"
+
+modules:
+  - name: worldpossible-updutil
+    buildsystem: meson
+    builddir: true
+    sources:
+      - type: git
+        branch: main
+        url: https://github.com/endlessm/worldpossible-updutil

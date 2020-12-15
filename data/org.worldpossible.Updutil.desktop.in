@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=worldpossible-updutil
+Comment=Run a shell script as root
+Exec=worldpossible-updutil
+Icon=org.worldpossible.Updutil
+Terminal=false
+Type=Application
+Categories=GTK;System;
+StartupNotify=true
