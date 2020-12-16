@@ -45,11 +45,9 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.success_result_label.set_text('')
         self.failure_result_label.hide()
         self.failure_result_label.set_text('')
-        self.output_label.hide()
-        self.output_window.hide()
         self.output_buffer.set_text('')
         self.path_entry.set_text('')
-        self.save_button.hide()
+        self.save_button.set_sensitive(False)
 
     def on_chooser_clicked(self, button):
         self.reset()
@@ -111,10 +109,8 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
                 self.failure_result_label.set_text('Result from script: ✗ Failure (code {})'.format(exit_status))
                 self.failure_result_label.show()
 
-            self.output_label.show()
-            self.output_window.show()
             self.output_buffer.set_text(stdout)
-            self.save_button.show()
+            self.save_button.set_sensitive(True)
         else: # subprocess failed for some reason other than exit status
             self.failure_result_label.set_text('Result from script: ✗ Failure ({})'.format(error_message))
             self.failure_result_label.show()

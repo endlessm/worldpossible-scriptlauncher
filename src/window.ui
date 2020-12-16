@@ -77,12 +77,12 @@
           <child>
             <object class="GtkLabel" id="output_label">
               <property name="label" translatable="yes">Output from script:</property>
-              <property name="visible">False</property>
+              <property name="visible">True</property>
             </object>
           </child>
           <child>
             <object class="GtkScrolledWindow" id="output_window">
-              <property name="visible">False</property>
+              <property name="visible">True</property>
               <property name="shadow-type">in</property>
               <property name="min-content-height">300</property>
               <property name="min-content-width">200</property>
@@ -99,7 +99,8 @@
           <child>
             <object class="GtkButton" id="save_button">
               <property name="label" translatable="yes">Save Log</property>
-              <property name="visible">False</property>
+              <property name="visible">True</property>
+              <property name="sensitive">False</property>
             </object>
           </child>
         </object>
