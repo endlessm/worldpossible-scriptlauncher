@@ -27,6 +27,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     _log = UpdutilLogger()
 
     chooser_button = Gtk.Template.Child()
+    spinner = Gtk.Template.Child()
     success_result_label = Gtk.Template.Child()
     failure_result_label = Gtk.Template.Child()
     output_label = Gtk.Template.Child()
@@ -41,6 +42,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.save_button.connect('clicked', self.on_save_clicked)
 
     def reset(self):
+        self.spinner.stop()
         self.success_result_label.hide()
         self.success_result_label.set_text('')
         self.failure_result_label.hide()
@@ -63,6 +65,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.path_entry.set_text(path)
 
         self.chooser_button.set_sensitive(False)
+        self.spinner.start()
 
         popen_args = []
         if os.path.isfile('/.flatpak-info'):
@@ -82,8 +85,11 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
             self.failure_result_label.set_text('Error executing script: {}'.format(err.message))
             self.failure_result_label.show()
             self.chooser_button.set_sensitive(True)
+            self.spinner.stop()
 
     def on_process_exit(self, proc, res, data=None):
+        self.spinner.stop()
+
         success = False
         try:
             success, stdout, _ = proc.communicate_utf8_finish(res)
