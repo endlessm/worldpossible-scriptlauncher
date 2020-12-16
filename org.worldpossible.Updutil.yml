@@ -1,7 +1,7 @@
 app-id: org.worldpossible.Updutil
 runtime: org.gnome.Platform
 runtime-version: '3.38'
-branch: stable
+branch: eos3
 sdk: org.gnome.Sdk
 command: worldpossible-updutil
 
