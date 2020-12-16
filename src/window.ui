@@ -39,7 +39,7 @@
                 <object class="GtkEntry" id="path_entry">
                   <property name="visible">True</property>
                   <property name="editable">False</property>
-                  <property name="placeholder-text">/path/to/script.sh</property>
+                  <property name="placeholder-text">Select file...</property>
                   <property name="can_focus">False</property>
                   <property name="width_request">400</property>
                 </object>
