@@ -35,11 +35,16 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
     output_buffer = Gtk.Template.Child()
     path_entry = Gtk.Template.Child()
     save_button = Gtk.Template.Child()
+    run_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.chooser_button.connect('clicked', self.on_chooser_clicked)
+        self.run_button.connect('clicked', self.on_run_clicked)
         self.save_button.connect('clicked', self.on_save_clicked)
+
+        style_context = self.chooser_button.get_style_context()
+        style_context.add_class('suggested-action')
 
     def reset(self):
         self.spinner.stop()
@@ -50,6 +55,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         self.output_buffer.set_text('')
         self.path_entry.set_text('')
         self.save_button.set_sensitive(False)
+        self.run_button.set_sensitive(False)
 
     def on_chooser_clicked(self, button):
         self.reset()
@@ -64,9 +70,20 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
         path = chooser.get_filename()
         self.path_entry.set_text(path)
 
+        style_context = self.chooser_button.get_style_context()
+        style_context.remove_class('suggested-action')
+        style_context = self.run_button.get_style_context()
+        style_context.add_class('suggested-action')
+        self.run_button.set_sensitive(True)
+
+    def on_run_clicked(self, button):
         self.chooser_button.set_sensitive(False)
+        self.run_button.set_sensitive(False)
+        style_context = self.run_button.get_style_context()
+        style_context.remove_class('suggested-action')
         self.spinner.start()
 
+        path = self.path_entry.get_text()
         popen_args = []
         if os.path.isfile('/.flatpak-info'):
             popen_args += ['flatpak-spawn', '--host']
@@ -122,6 +139,7 @@ class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
             self.failure_result_label.show()
 
         self.chooser_button.set_sensitive(True)
+        self.run_button.set_sensitive(True)
 
     def on_save_clicked(self, button):
         chooser = Gtk.FileChooserNative.new('Save Log', self,

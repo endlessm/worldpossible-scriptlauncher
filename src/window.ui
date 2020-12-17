@@ -102,10 +102,25 @@
             </object>
           </child>
           <child>
-            <object class="GtkButton" id="save_button">
-              <property name="label" translatable="yes">Save Log</property>
+            <object class ="GtkBox">
               <property name="visible">True</property>
-              <property name="sensitive">False</property>
+              <property name="orientation">horizontal</property>
+              <property name="spacing">5</property>
+              <property name="halign">center</property>
+              <child>
+                <object class="GtkButton" id="save_button">
+                  <property name="label" translatable="yes">Save Log</property>
+                  <property name="visible">True</property>
+                  <property name="sensitive">False</property>
+                </object>
+              </child>
+              <child>
+                <object class="GtkButton" id="run_button">
+                  <property name="label" translatable="yes">Run</property>
+                  <property name="visible">True</property>
+                  <property name="sensitive">False</property>
+                </object>
+              </child>
             </object>
           </child>
         </object>
