@@ -32,4 +32,4 @@ modules:
     sources:
       - type: git
         branch: main
-        url: https://github.com/endlessm/worldpossible-updutil
+        url: https://github.com/endlessm/worldpossible-scriptlauncher
