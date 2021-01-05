@@ -1,8 +1,8 @@
 subdir('icons')
 
 desktop_file = i18n.merge_file(
-  input: 'org.worldpossible.Updutil.desktop.in',
-  output: 'org.worldpossible.Updutil.desktop',
+  input: 'org.worldpossible.ScriptLauncher.desktop.in',
+  output: 'org.worldpossible.ScriptLauncher.desktop',
   type: 'desktop',
   po_dir: '../po',
   install: true,
@@ -17,8 +17,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-  input: 'org.worldpossible.Updutil.appdata.xml.in',
-  output: 'org.worldpossible.Updutil.appdata.xml',
+  input: 'org.worldpossible.ScriptLauncher.appdata.xml.in',
+  output: 'org.worldpossible.ScriptLauncher.appdata.xml',
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
@@ -31,7 +31,7 @@ if appstream_util.found()
   )
 endif
 
-install_data('org.worldpossible.updutil.gschema.xml',
+install_data('org.worldpossible.scriptlauncher.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 

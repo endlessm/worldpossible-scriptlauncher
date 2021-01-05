@@ -1,6 +1,6 @@
 #!@PYTHON@
 
-# worldpossible-updutil.in
+# worldpossible-scriptlauncher.in
 #
 # Copyright 2020 Endless OS Foundation LLC
 #
@@ -29,14 +29,14 @@ localedir = '@localedir@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-gettext.install('worldpossible-updutil', localedir)
+gettext.install('worldpossible-scriptlauncher', localedir)
 
 if __name__ == '__main__':
     import gi
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'worldpossible-updutil.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'worldpossible-scriptlauncher.gresource'))
     resource._register()
 
-    from worldpossible_updutil import main
+    from worldpossible_scriptlauncher import main
     sys.exit(main.main(VERSION))

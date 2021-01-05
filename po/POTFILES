@@ -1,6 +1,6 @@
-data/org.worldpossible.Updutil.desktop.in
-data/org.worldpossible.Updutil.appdata.xml.in
-data/org.worldpossible.updutil.gschema.xml
+data/org.worldpossible.ScriptLauncher.desktop.in
+data/org.worldpossible.ScriptLauncher.appdata.xml.in
+data/org.worldpossible.scriptlauncher.gschema.xml
 src/window.ui
 src/main.py
 src/window.py

@@ -1,9 +1,9 @@
 pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
-moduledir = join_paths(pkgdatadir, 'worldpossible_updutil')
+moduledir = join_paths(pkgdatadir, 'worldpossible_scriptlauncher')
 gnome = import('gnome')
 
-gnome.compile_resources('worldpossible-updutil',
-  'worldpossible_updutil.gresource.xml',
+gnome.compile_resources('worldpossible-scriptlauncher',
+  'worldpossible_scriptlauncher.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -18,18 +18,18 @@ conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
-  input: 'worldpossible-updutil.in',
-  output: 'worldpossible-updutil',
+  input: 'worldpossible-scriptlauncher.in',
+  output: 'worldpossible-scriptlauncher',
   configuration: conf,
   install: true,
   install_dir: get_option('bindir')
 )
 
-worldpossible_updutil_sources = [
+worldpossible_scriptlauncher_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'updutillogger.py',
+  'scriptlauncherlogger.py',
 ]
 
-install_data(worldpossible_updutil_sources, install_dir: moduledir)
+install_data(worldpossible_scriptlauncher_sources, install_dir: moduledir)

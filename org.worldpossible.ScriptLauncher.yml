@@ -1,9 +1,9 @@
-app-id: org.worldpossible.Updutil
+app-id: org.worldpossible.ScriptLauncher
 runtime: org.gnome.Platform
 runtime-version: '3.38'
 branch: eos3
 sdk: org.gnome.Sdk
-command: worldpossible-updutil
+command: worldpossible-scriptlauncher
 
 finish-args:
   # X11 + XShm access
@@ -26,7 +26,7 @@ cleanup:
   - "*.a"
 
 modules:
-  - name: worldpossible-updutil
+  - name: worldpossible-scriptlauncher
     buildsystem: meson
     builddir: true
     sources:

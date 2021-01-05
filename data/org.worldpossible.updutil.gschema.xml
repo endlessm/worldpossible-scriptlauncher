@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="worldpossible-updutil">
-	<schema id="org.worldpossible.updutil" path="/org/worldpossible/updutil/">
-	</schema>
-</schemalist>

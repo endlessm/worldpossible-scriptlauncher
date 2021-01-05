@@ -23,12 +23,12 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk, Gio
 
-from .window import WorldpossibleUpdutilWindow
+from .window import WorldpossibleScriptLauncherWindow
 
 
 class Application(Gtk.Application):
     def __init__(self):
-        super().__init__(application_id='org.worldpossible.Updutil',
+        super().__init__(application_id='org.worldpossible.ScriptLauncher',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
 
     def show_warning_dialog(self, window):
@@ -44,7 +44,7 @@ class Application(Gtk.Application):
     def do_activate(self):
         win = self.props.active_window
         if not win:
-            win = WorldpossibleUpdutilWindow(application=self)
+            win = WorldpossibleScriptLauncherWindow(application=self)
         win.present()
         self.show_warning_dialog(win)
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-    <id>org.worldpossible.Updutil.desktop</id>
+    <id>org.worldpossible.ScriptLauncher.desktop</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-2.0-or-later</project_license>
-    <name>World Possible Updutil</name>
+    <name>World Possible ScriptLauncher</name>
     <summary>A tool for running shell scripts with root privileges</summary>
     <description>
         <p>
-            The World Possible Updutil is an application that facilitates running
+            The World Possible ScriptLauncher is an application that facilitates running
             shell scripts on the host system (outside the Flatpak environment) as
             the root user. The user is able to choose a script to run using a
             graphical file chooser, which will then be executed and any output

@@ -1,1 +1,1 @@
-i18n.gettext('worldpossible-updutil', preset: 'glib')
+i18n.gettext('worldpossible-scriptlauncher', preset: 'glib')

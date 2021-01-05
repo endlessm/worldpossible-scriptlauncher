@@ -17,14 +17,14 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 from gi.repository import Gtk, Gio, GLib
-from .updutillogger import UpdutilLogger
+from .scriptlauncherlogger import ScriptLauncherLogger
 import os
 
-@Gtk.Template(resource_path='/org/worldpossible/updutil/window.ui')
-class WorldpossibleUpdutilWindow(Gtk.ApplicationWindow):
-    __gtype_name__ = 'WorldpossibleUpdutilWindow'
+@Gtk.Template(resource_path='/org/worldpossible/scriptlauncher/window.ui')
+class WorldpossibleScriptLauncherWindow(Gtk.ApplicationWindow):
+    __gtype_name__ = 'WorldpossibleScriptLauncherWindow'
 
-    _log = UpdutilLogger()
+    _log = ScriptLauncherLogger()
 
     chooser_button = Gtk.Template.Child()
     spinner = Gtk.Template.Child()

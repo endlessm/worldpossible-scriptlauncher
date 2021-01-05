@@ -28,7 +28,7 @@ import os
 from gi.repository import GLib, GObject
 
 
-class UpdutilLogger(GObject.GObject):
+class ScriptLauncherLogger(GObject.GObject):
     """GLib logging wrapper
 
     A tiny wrapper aroung the default GLib logger.
@@ -39,7 +39,7 @@ class UpdutilLogger(GObject.GObject):
     * Debug is for developer use as a way to get more runtime info.
     """
 
-    _DOMAIN = "org.worldpossible.Updutil"
+    _DOMAIN = "org.worldpossible.ScriptLauncher"
 
     def _log(self, message, level):
         stack = inspect.stack()
