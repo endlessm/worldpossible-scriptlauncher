@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=worldpossible-scriptlauncher
+Name=ScriptLauncher
 Comment=Run a shell script as root
 Exec=worldpossible-scriptlauncher
 Icon=org.worldpossible.ScriptLauncher
