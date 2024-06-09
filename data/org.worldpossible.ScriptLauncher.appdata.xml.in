@@ -16,7 +16,11 @@
             responsibility; use carefully.
         </p>
     </description>
+    <developer_name>Endless OS Foundation</developer_name>
+    <launchable type="desktop-id">org.worldpossible.ScriptLauncher.desktop</launchable>
     <url type="homepage">https://github.com/endlessm/worldpossible-scriptlauncher</url>
+    <url type="bugtracker">https://github.com/endlessm/worldpossible-scriptlauncher/issues</url>
+    <url type="vcs-browser">https://github.com/endlessm/worldpossible-scriptlauncher</url>
     <content_rating type="oars-1.1" />
     <releases>
       <release version="1.0.1" date="2021-01-05"/>
